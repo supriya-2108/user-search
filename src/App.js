@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React from 'react'
+import { GlobalContext } from './context/userContext'
+import Card from './Components/Card';
+import Search from './Components/Search';
+import Filters from './Components/Filters';
+import CreateTeam from './Components/CreateTeam';
+const App = () => {
+  const {user,page,moveBack,moveForward,displayuser,nbPage}=GlobalContext();
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+    <Search/>
+    <CreateTeam/>
+    <Filters/>
+      {
+        (displayuser!==undefined)?
+       <Card items={displayuser} heading="Users"/>:''
+      }
+      <div style={{display:"flex",justifyContent:"center",margin:"2rem 0"}}>
+        <button onClick={moveBack}>Prev</button>
+        <p>{page}of{nbPage}</p>
+        <button onClick={moveForward}>Next</button>
+      </div>
+  </>
+  )
 }
 
-export default App;
+export default App
